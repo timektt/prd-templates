@@ -140,3 +140,21 @@ flowchart TD
   Chat-->Redis[(Redis Streams)]
   Notif[Worker]-->FCM[FCM/APNs]
   Moderation-->AdminWeb[Vue Admin]
+
+
+## 10  Data Model (Core)
+
+```text
+users(id PK, email UNIQ, password_hash, display_name, avatar_url,
+      lat NUMERIC(9,6), lon NUMERIC(9,6), created_at, deleted_at)
+
+skills(id PK, user_id FK, category, title, description, availability_json,
+       is_active BOOL, rating_cached FLOAT, created_at)
+
+connections(id PK, seeker_id FK, provider_id FK,
+            status ENUM(pending,accepted,declined), created_at)
+
+messages(id PK, connection_id FK, sender_id FK, ciphertext, sent_at)
+
+feedback(id PK, connection_id FK, rater_id FK, vote BOOL, created_at)
+
